@@ -13,6 +13,7 @@
     "production": {
       "user": "angus",
       "host": ["39.106.137.127"],
+      "port": "39999",
       "ref": "origin/master",
       "repo": "git@github.com:zhaoangus/wechat_angus.git",
       "path": "/home/angus/project/wechat/production",
