@@ -1,0 +1,25 @@
+{
+  "apps" :[{
+    "name": "wechat_angus",
+    "script": "server.js",
+    "env": {
+      "COMMON_VARIABLE": "true"
+    },
+    "env_production": {
+      "NODE_ENV": "production"
+    }
+  }],
+  "deploy": {
+    "production": {
+      "user": "angus",
+      "host": ["39.106.137.127"],
+      "ref": "origin/master",
+      "repo": "git@github.com:zhaoangus/wechat_angus.git",
+      "path": "/home/angus/project/wechat/production",
+      "ssh_options": "StrictHostKeyChecking=no",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
