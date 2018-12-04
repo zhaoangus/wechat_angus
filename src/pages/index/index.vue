@@ -19,6 +19,7 @@
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
     <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+    <a href="/pages/shop/main" class="home">去往home页面</a>
   </div>
 </template>
 
@@ -28,7 +29,7 @@ import card from '@/components/card'
 export default {
   data () {
     return {
-      motto: 'Hello World',
+      motto: 'Hello app',
       userInfo: {}
     }
   },
@@ -49,13 +50,14 @@ export default {
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
+              console.log(this.userInfo)
             }
           })
         }
       })
     },
     clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+      // console.log('clickHandle:', msg, ev)
     }
   },
 
@@ -95,7 +97,7 @@ export default {
   border: 1px solid #ccc;
 }
 
-.counter {
+.counter, .home {
   display: inline-block;
   margin: 10px auto;
   padding: 5px 10px;

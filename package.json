@@ -17,7 +17,10 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "better-scroll": "^1.13.2",
     "mpvue": "^1.0.11",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

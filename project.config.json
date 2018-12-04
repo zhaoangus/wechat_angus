@@ -10,7 +10,7 @@
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
 	"appid": "wx06f834ca63a893d7",
-	"projectname": "firstapp",
+	"projectname": "wechat_angus",
 	"condition": {
 		"search": {
 			"current": -1,

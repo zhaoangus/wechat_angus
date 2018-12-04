@@ -1,8 +1,12 @@
-# firstapp
+# Wechat_Angus
+
+一个微信小程序
 
 > A Mpvue project
 
 ## Build Setup
+
+安装方法
 
 ``` bash
 # install dependencies
