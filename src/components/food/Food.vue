@@ -10,7 +10,7 @@
               </div>
             </div>
             <div class="content">
-              <h1 class="title">{{food.name}}</h1>
+              <h1 @click="titleClick" class="title">{{food.name}}</h1>
               <div class="detail">
                 <span class="sell-count">月售{{food.sellCount}}</span>
                 <span class="rating">好评率{{food.rating}}%</span>
@@ -43,7 +43,7 @@
                   class="rating-item border-1px" :key="rating.index">
                     <div class="user">
                       <span class="name">{{rating.username}}</span>
-                      <img class="avatar" width="12" height="12" :src="rating.avatar">
+                      <img class="avatar" :src="rating.avatar">
                     </div>
                     <div class="time">{{rating.rateTime | formatDate}}</div>
                     <p class="text">
@@ -72,9 +72,7 @@ import Ratingselect from '../ratingselect/Ratingselect'
 const ALL = 2
 export default {
   name: 'Food',
-  props: {
-    food: Object
-  },
+  props: ['food', 'foodnum'],
   components: {
     Cartcontrol,
     Split,
@@ -119,6 +117,9 @@ export default {
     },
     toggle () {
       this.onlyContent = !this.onlyContent
+    },
+    titleClick () {
+      console.log(this.needShow())
     }
   },
   filters: {
@@ -126,6 +127,9 @@ export default {
       let date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     }
+  },
+  mounted () {
+    console.log(this.foodnum)
   }
 }
 </script>
@@ -252,6 +256,8 @@ export default {
               font-size: 10px
               color: rgb(147, 153, 159)
             .avatar
+              width: 12px
+              height: 12px
               border-radius: 50%
           .time
             margin-bottom: 6px

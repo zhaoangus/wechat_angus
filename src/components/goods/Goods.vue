@@ -1,25 +1,29 @@
 <template>
   <div>
     <div class="goods">
-      <scroll-view style="width:100px" scroll-y class="menu-wrapper">
-          <ul>
-            <li v-for="(item, index) in goods" :key="index"
-            class="menu-item" :class="{ 'current': currentIndex === index }"
-            @tap="selectMenu(index)">
-              <span class="text border-1px">
-                <span v-if="item.type>0" class="icon"
-                  :class="classMap[item.type]"></span>{{item.name}}
-              </span>
-            </li>
-          </ul>
+      <scroll-view style="width:100px" scroll-y
+      class="menu-wrapper" :scroll-into-view="navId"
+      scroll-with-animation="true">
+        <ul class="menu-ul">
+          <li v-for="(item, index) in goods" :key="index"
+          class="menu-item" :class="index===currentIndex ? 'current' : ''"
+          @click="selectMenu(index)" :id="'nav_'+index">
+            <span class="text border-1px">
+              <span v-if="item.type>0" class="icon"
+                :class="classMap[item.type]"></span>{{item.name}}
+            </span>
+          </li>
+        </ul>
       </scroll-view>
-      <scroll-view style="height:100%" scroll-y :scroll-into-view="toviewid" scroll-with-animation="true" class="foods-wrapper">
+      <scroll-view style="height:100%" scroll-y
+      :scroll-into-view="toviewid" scroll-with-animation="true"
+      class="foods-wrapper" @scroll="onScroll">
         <ul>
           <li v-for="(item, i) in goods" :id="'con_'+i"
           :key="i" class="food-list food-list-hook">
             <h1 class="title">{{item.name}}</h1>
             <ul>
-              <li @click="selectFood(food)" v-for="(food, subIndex) in item.foods"
+              <li @click="selectFood(food, subIndex)" v-for="(food, subIndex) in item.foods"
               :key="subIndex" class="food-item border-1px">
                 <div class="icon">
                   <img :src="food.icon">
@@ -34,7 +38,6 @@
                     <span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">{{food.oldPrice}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
-                    <!-- <cartcontrol :food="food" @cart-add="_drop"></cartcontrol> -->
                     <cartcontrol :food="food"></cartcontrol>
                   </div>
                 </div>
@@ -45,15 +48,16 @@
       </scroll-view>
       <shopcar ref="shopcart" :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcar>
     </div>
-    <food :food="selectedFood" ref="food"></food>
+    <food :food="selectedfood" :foodnum="selectedfoodnum" ref="food"></food>
   </div>
 </template>
 
 <script>
-// import BScroll from 'better-scroll'
 import Shopcar from '../shopcar/Shopcar'
 import Cartcontrol from '../cartcontrol/Cartcontrol'
 import Food from '../food/Food'
+import { setTimeout } from 'timers'
+// import { setTimeout } from 'timers';
 export default {
   name: 'Goods',
   props: {
@@ -61,13 +65,19 @@ export default {
   },
   data () {
     return {
+      seller: {},
       goods: [],
       classMap: [],
+      navId: '',
       toviewid: '',
       currentIndex: 0,
+      navUlHeight: 0,
+      navItemHeight: 0,
       listHeight: [],
-      scrollY: 0,
-      selectedFood: {}
+      contentHeight: [],
+      selectedfood: {},
+      selectedfoodnum: 0,
+      tofood: false
     }
   },
   components: {
@@ -75,31 +85,79 @@ export default {
     Cartcontrol,
     Food
   },
+  watch: {
+    currentIndex () {
+      // console.log(this.currentIndex)
+      if (this.contentHeight < this.navUlHeight) {
+        let h = this.currentIndex * this.navItemHeight
+        if (h > this.contentHeight) {
+          this.navId = `nav_${this.currentIndex}`
+        } else {
+          this.navId = 'nav_0'
+        }
+      }
+    },
+    goods () {
+      setTimeout(() => {
+        this.getFoodHeight()
+      }, 60)
+    }
+  },
   methods: {
     selectMenu (index) {
-      // let foodList = this.$refs.foodswrapper.getElementsByClassName('food-list-hook')
-      // let el = foodList[index]
       this.toviewid = `con_${index}`
+      this.navId = `nav_${index}`
       this.currentIndex = index
-      let menulist = this.$refs.menuwrapper
-      console.log(menulist)
+      // let menulist = this.$refs.menuWrapper
+      // console.log(menulist)
     },
-    selectFood (food, event) {
-      this.selectedFood = food
-      this.$refs.food.show()
+    onScroll (e) {
+      this.toviewid = ''
+      let scrollTop = e.target.scrollTop
+      let length = this.listHeight.length
+      // if (scrollTop >= this.listHeight[length - 1] - this.contentHeight) {
+      //   return
+      // }
+      if (scrollTop > 0 && scrollTop < this.listHeight[0]) {
+        this.currentIndex = 0
+      }
+      for (let i = 0; i < length; i++) {
+        if (scrollTop >= this.listHeight[i - 1] && scrollTop < this.listHeight[i]) {
+          this.currentIndex = i
+        }
+      }
+    },
+    getFoodHeight () {
+      var query = wx.createSelectorQuery()
+      let h = 0
+      query.selectAll('.food-list-hook').boundingClientRect((rects) => {
+        rects.forEach((rect) => {
+          h += rect.height
+          this.listHeight.push(h)
+        })
+      })
+      query.select('.foods-wrapper').boundingClientRect((rect) => {
+        this.contentHeight = rect.height
+      })
+      query.select('.menu-ul').boundingClientRect((rect) => {
+        this.navUlHeight = rect.height
+      })
+      query.select('.menu-item').boundingClientRect((rect) => {
+        this.navItemHeight = rect.height
+      }).exec()
+    },
+    selectFood (food, index) {
+      this.tofood = true
+      setTimeout(() => {
+        this.selectedfood = food
+        this.selectedfoodnum = index
+        this.$refs.food.show()
+      }, 60)
+      // console.log(this.selectedfood)
+      // console.log(this.selectedfoodnum)
     }
   },
   computed: {
-    currentIndex () {
-      for (let i = 0; i < this.listHeight.length; i++) {
-        let height1 = this.listHeight[i]
-        let height2 = this.listHeight[i + 1]
-        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-          return i
-        }
-      }
-      return 0
-    },
     selectFoods () {
       let foods = []
       this.goods.forEach((good) => {
@@ -114,16 +172,16 @@ export default {
   },
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+    // this.seller = this.$store.state.seller
+    // this.goods = this.$store.state.goods
+    // console.log(this.seller)
+    // console.log(this.goods)
     wx.request({
       url: 'https://www.easy-mock.com/mock/5c0515eef57279499b6ac104/getgoods',
       methods: 'GET',
       success: (res) => {
         this.goods = res.data.goods
-        console.log(this.goods)
-        this.$nextTick(() => {
-          this._initScroll()
-          this._calculateHeight()
-        })
+        // console.log(this.goods)
       }
     })
   }

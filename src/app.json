@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/main",
+    "pages/home/main",
     "pages/shop/main",
     "pages/logs/main",
     "pages/counter/main"

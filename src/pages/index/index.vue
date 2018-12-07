@@ -19,7 +19,8 @@
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
     <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
-    <a href="/pages/shop/main" class="home">去往home页面</a>
+    <a href="/pages/shop/main" class="shop">去往shop页面</a>
+    <a href="/pages/home/main" class="home">去往home页面</a>
   </div>
 </template>
 
@@ -97,7 +98,7 @@ export default {
   border: 1px solid #ccc;
 }
 
-.counter, .home {
+.counter, .home, .shop {
   display: inline-block;
   margin: 10px auto;
   padding: 5px 10px;

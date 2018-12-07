@@ -16,9 +16,7 @@
           分钟送达
         </div>
         <div v-if="seller.supports" class="support">
-          <span class="icon"
-          :class="classMap[seller.supports[0].type]"
-          ></span>
+          <span class="icon decrease"></span>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
@@ -48,7 +46,8 @@
           </div>
           <ul v-if="seller.supports" class="supports">
             <li class="support-item" v-for="item in seller.supports" :key="item.index">
-               <span class="icon" :class="classMap[item.type]"></span>
+               <span class="icon" :class="[{'decrease':item.type===0},{'discount':item.type===1},
+              {'special':item.type===2},{'invoice':item.type===3},{'guarantee':item.type===4}]"></span>
               <span class="text">{{item.description}}</span>
             </li>
           </ul>
@@ -91,11 +90,11 @@ export default {
     hideDetail () {
       this.detailShow = false
     }
-  },
-  created () {
-    this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-    console.log(this.seller)
   }
+  // created () {
+  //   this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  //   console.log(this.seller)
+  // }
 }
 </script>
 

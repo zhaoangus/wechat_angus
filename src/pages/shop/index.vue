@@ -8,30 +8,41 @@
       <div class="tab-item" @click="toratings">
         <a class="tab-link" :class="{active: onratings}">评论</a>
       </div>
-      <div class="tab-item" @click="tosellers">
-        <a class="tab-link" :class="{active: onsellers}">商家</a>
+      <div class="tab-item" @click="toseller">
+        <a class="tab-link" :class="{active: onseller}">商家</a>
       </div>
     </div>
     <div class="goods-wrapper" v-if="ongoods">
       <Goods :seller="seller"></Goods>
     </div>
+    <div class="ratings-wrapper" v-if="onratings">
+      <Ratings :seller="seller"></Ratings>
+    </div>
+    <div class="seller-wrapper" v-if="onseller">
+      <seller :seller="seller"></Seller>
+    </div>
   </div>
 </template>
 
 <script>
+// import store from './store/store'
 import shopHeader from '@/components/header/shopHeader'
 import Goods from '@/components/goods/Goods'
+import Ratings from '@/components/ratings/Ratings'
+import Seller from '@/components/seller/Seller'
 export default {
   name: 'index',
   components: {
     shopHeader,
-    Goods
+    Goods,
+    Ratings,
+    Seller
   },
   data () {
     return {
       ongoods: true,
       onratings: false,
-      onsellers: false,
+      onseller: false,
       seller: {}
     }
   },
@@ -39,18 +50,24 @@ export default {
     togoods () {
       this.ongoods = true
       this.onratings = false
-      this.onsellers = false
+      this.onseller = false
     },
     toratings () {
       this.ongoods = false
       this.onratings = true
-      this.onsellers = false
+      this.onseller = false
     },
-    tosellers () {
+    toseller () {
       this.ongoods = false
       this.onratings = false
-      this.onsellers = true
+      this.onseller = true
     }
+    // getseller (seller) {
+    //   this.$store.commit('initSeller', seller)
+    // },
+    // getgoods (goods) {
+    //   this.$store.commit('initGoods', goods)
+    // }
   },
   created () {
     wx.request({
@@ -58,9 +75,23 @@ export default {
       methods: 'GET',
       success: (res) => {
         this.seller = res.data.seller
-        console.log(this.seller)
+        // this.$store.state.seller = res.data.seller
+        // let seller = res.data.seller
+        // this.getseller(seller)
+        // console.log(this.$store.state.seller)
       }
     })
+    // wx.request({
+    //   url: 'https://www.easy-mock.com/mock/5c0515eef57279499b6ac104/getgoods',
+    //   methods: 'GET',
+    //   success: (res) => {
+    //     this.seller = res.data.seller
+    //     // this.$store.state.goods = res.data.goods
+    //     // let goods = res.data.goods
+    //     // this.getgoods(goods)
+    //     // console.log(this.$store.state.goods)
+    //   }
+    // })
   }
 }
 </script>
