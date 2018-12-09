@@ -26,7 +26,7 @@
 
 <script>
 // import store from './store/store'
-import shopHeader from '@/components/header/shopHeader'
+import shopHeader from '@/components/shopheader/shopHeader'
 import Goods from '@/components/goods/Goods'
 import Ratings from '@/components/ratings/Ratings'
 import Seller from '@/components/seller/Seller'
@@ -74,7 +74,7 @@ export default {
       url: 'https://www.easy-mock.com/mock/5c0515eef57279499b6ac104/getsellers',
       methods: 'GET',
       success: (res) => {
-        this.seller = res.data.seller
+        this.seller = res.data.seller[0]
         // this.$store.state.seller = res.data.seller
         // let seller = res.data.seller
         // this.getseller(seller)
