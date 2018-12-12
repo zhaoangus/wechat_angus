@@ -31,4 +31,4 @@ npm run build --report
 
 ## 页面简介
 
-<iframe src="https://github.com/zhaoangus/wechat_angus/blob/master/static/image/ele.gif">
+![conv_ops](https://github.com/zhaoangus/wechat_angus/blob/master/static/image/ele.gif)
