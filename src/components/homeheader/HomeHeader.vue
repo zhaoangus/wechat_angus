@@ -1,6 +1,6 @@
 <template>
   <div class="home-header">
-    <div class="header-location">
+    <div class="header-location" @click="tocity">
       <span class="iconfont location-icon">&#xe633;</span>
       <span class="location">鲁疃家园南区</span>
       <span class="iconfont arrow">&#xe6aa;</span>
@@ -14,7 +14,14 @@
 
 <script>
 export default {
-  name: 'HomeHeader'
+  name: 'HomeHeader',
+  methods: {
+    tocity () {
+      wx.navigateTo({
+        url: '/pages/city/main'
+      })
+    }
+  }
 }
 </script>
 
@@ -28,6 +35,7 @@ export default {
       margin: 10px 0
       font-size: 18px
       font-weight: bold
+      cursor: pointer
       .location-icon
         font-size: 20px
       .location

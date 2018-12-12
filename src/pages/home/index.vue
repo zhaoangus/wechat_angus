@@ -4,6 +4,7 @@
     <HomeIcon :iconlist="iconlist"></HomeIcon>
     <HomeContent :swiperlist="swiperlist"></HomeContent>
     <HomeReco :seller="seller"></HomeReco>
+    <HomeOption></HomeOption>
   </div>
 </template>
 
@@ -12,13 +13,15 @@ import HomeHeader from '@/components/homeheader/HomeHeader'
 import HomeIcon from '@/components/homeicon/HomeIcon'
 import HomeContent from '@/components/homecontent/HomeContent'
 import HomeReco from '@/components/homereco/HomeReco'
+import HomeOption from '@/components/homeoption/HomeOption'
 export default {
   name: 'Home',
   components: {
     HomeHeader,
     HomeIcon,
     HomeContent,
-    HomeReco
+    HomeReco,
+    HomeOption
   },
   data () {
     return {

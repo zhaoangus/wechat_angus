@@ -19,7 +19,7 @@
       </div>
       <div class="content">
         <div class="title">
-          <span class="brand"></span>
+          <span v-if="item.brand" class="brand"></span>
           <span class="name">
             {{item.name}}
           </span>
@@ -109,6 +109,7 @@ export default {
         float: left
         vertical-align: top
         img
+          disaply: inline-block
           width: 64px
           height: 64px
           border-radius: 2px

@@ -18,7 +18,7 @@
       <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+    <a href="/pages/city/main" class="counter">去往city页面</a>
     <a href="/pages/shop/main" class="shop">去往shop页面</a>
     <a href="/pages/home/main" class="home">去往home页面</a>
   </div>
