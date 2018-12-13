@@ -31,17 +31,19 @@
               <span class="empty" @click="empty">清空</span>
             </div>
             <div class="list-content" ref="listcontent">
-              <ul>
-                <li class="food" v-for="food in selectFoods" :key="food.index">
-                  <span class="name">{{food.name}}</span>
-                  <div class="price">
-                    <span>¥{{food.price*food.count}}</span>
-                  </div>
-                  <div class="cartcontrol-wrapper">
-                    <cartcontrol :food="food"></cartcontrol>
-                  </div>
-                </li>
-              </ul>
+              <scroll-view scroll-y style="height:200px">
+                <ul>
+                  <li class="food" v-for="food in selectFoods" :key="food.index">
+                    <span class="name">{{food.name}}</span>
+                    <div class="price">
+                      <span>¥{{food.price*food.count}}</span>
+                    </div>
+                    <div class="cartcontrol-wrapper">
+                      <cartcontrol :food="food"></cartcontrol>
+                    </div>
+                  </li>
+                </ul>
+              </scroll-view>
             </div>
           </div>
         </transition>
@@ -54,7 +56,6 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll'
 import Cartcontrol from '../cartcontrol/Cartcontrol'
 export default {
   name: 'ShopCar',
@@ -63,17 +64,17 @@ export default {
   },
   data () {
     return {
-      balls: [{
-        show: false
-      }, {
-        show: false
-      }, {
-        show: false
-      }, {
-        show: false
-      }, {
-        show: false
-      }],
+      // balls: [{
+      //   show: false
+      // }, {
+      //   show: false
+      // }, {
+      //   show: false
+      // }, {
+      //   show: false
+      // }, {
+      //   show: false
+      // }],
       dropBall: [],
       fold: false
     }
@@ -132,17 +133,6 @@ export default {
         return false
       }
       let show = !this.fold
-      if (show) {
-        this.$nextTick(() => {
-          if (!this.scroll) {
-            this.scroll = new BScroll(this.$refs.listcontent, {
-              click: true
-            })
-          } else {
-            this.scroll.refresh()
-          }
-        })
-      }
       return show
     }
   },
@@ -315,7 +305,6 @@ export default {
           padding: 0 18px
           max-height: 217px
           background: #fff
-          overflow: hidden
           .food
             position: relative
             padding: 12px 0
